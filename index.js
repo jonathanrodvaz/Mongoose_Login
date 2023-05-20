@@ -5,6 +5,13 @@ const express = require("express");
 const dotenv = require("dotenv");
 dotenv.config();
 
+//Configuramos las cors
+const cors = require('cors');
+app.use(cors());
+
+
+
+
 //Conectamos con la base de datos
 connect();
 const app = express();
@@ -14,8 +21,8 @@ const PORT = process.env.PORT;
 
 
 //Esto es para introducir limitaciones en la recepcion y envio de datos, para que no se envien datos que son de más de 5mb. Si hubiera problemas con las subidas te saldría un error sobre el rate, en ese caso puedes poner 15mb
-app.use(express.json({ limit: '5mb'}));
-app.use(express.urlencoded({ limit: '5mb', extended: true }));
+app.use(express.json({ limit: '10mb'}));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 
 
@@ -23,11 +30,8 @@ app.use(express.urlencoded({ limit: '5mb', extended: true }));
 //------
 //Routes
 //------
-const CharacterRoutes = require("./src/api/routes/Character.routes");
-const MovieRoutes = require('./src/api/routes/Movie.routes');
 
-app.use("/api/v1/character/", CharacterRoutes);
-app.use('/api/v1/movies/', MovieRoutes);
+
 
 //Esto de aquí es para cuando no metamos ninguna ruta
 app.use('*', (req, res, next)=> {
