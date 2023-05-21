@@ -5,18 +5,21 @@ const express = require("express");
 const dotenv = require("dotenv");
 dotenv.config();
 
-//Configuramos las cors
-const cors = require('cors');
-app.use(cors());
-
-
-
+const BASE_URL = process.env.BASE_URL;
 
 //Conectamos con la base de datos
 connect();
 const app = express();
 configCloudinary();
 const PORT = process.env.PORT;
+
+//Configuramos las cors
+const cors = require('cors');
+app.use(cors({
+    origin: '*',
+    credentials: true,
+}
+));
 
 
 
@@ -30,8 +33,10 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 //------
 //Routes
 //------
+const UserRoutes = require('./src/api/routes/user.routes');
 
-
+//Creamos la ruta general, todo lo demás aparecerá despues de esta ruta general que hemos establecido.
+app.use('/api/v1/users', UserRoutes)
 
 //Esto de aquí es para cuando no metamos ninguna ruta
 app.use('*', (req, res, next)=> {

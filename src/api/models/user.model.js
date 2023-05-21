@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const validator = require("validator");
+const validator = require('validator');
 
 //Aqui hacemos el Schema. 
 const UserSchema = new mongoose.Schema(
@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema(
 );
 
 //Tenemos que preguardar la contraseña porque antes de guardar tenemos que encriptar la contraseña.
-UserSchema.pre("save", async (next)=>{
+UserSchema.pre('save', async function (next) {
 try {
     //El bcrypt.hash es la encriptacion, y le ponemos el numero 10 para que de diez vueltas de encriptacion(Encripta, vuelve a encriptar, x10) NO METER MÁS DE 10 VUELTAS DE ENCRIPTACION
     this.password = await bcrypt.hash(this.password, 10)
@@ -37,5 +37,5 @@ try {
 }
 })
 
-const User = mongoose.model("User", UserSchema)
+const User = mongoose.model('User', UserSchema)
 module.exports = User;

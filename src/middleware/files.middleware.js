@@ -1,15 +1,15 @@
-const multer = require("multer");
-const cloudinary = require("cloudinary").v2;
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
-const dotenv = require("dotenv");
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const dotenv = require('dotenv');
 dotenv.config();
 
 //Creamos el almacen
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "moviesProject",
-    allowedFormats: ["jpg", "png", "jpeg", "gif", "svg", "webp"],
+    folder: 'UserFTProyect',
+    allowedFormats: ['jpg', 'png', 'jpeg', 'gif', 'svg', 'webp'],
   },
 });
 
@@ -18,13 +18,13 @@ const upload = multer({ storage });
 
 //Función de borrado de imagenes
 const deleteImgCloudinary = (imgUrl) => {
-  const imgSplited = imgUrl.split("/");
-  const nameSplited = imgSplited[imgSplited.length - 1].split(".");
+  const imgSplited = imgUrl.split('/');
+  const nameSplited = imgSplited[imgSplited.length - 1].split('.');
   const folderSplited = imgSplited[imgSplited.length - 2];
   const public_id = `${folderSplited}/${nameSplited[0]}`;
 
   cloudinary.uploader.destroy(public_id, () => {
-    console.log("Image delete in cloudinary");
+    console.log('Image delete in cloudinary');
   });
 };
 
